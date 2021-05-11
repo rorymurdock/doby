@@ -157,7 +157,7 @@ Used to inject code into the class ___init__()_ function. Useful for getting con
             }
         },
         "code": [
-            'print("hello")'
+            "print('hello')"
         ]
     }
 }
@@ -179,8 +179,8 @@ Adds a main function to the library if you want to launch it directly
         "run": true,
         "description": "This is the main function",
         "code": [
-            'fruit = fruitStand()',
-            'print(fruit.getStock("Apples"))'
+            "fruit = fruitStand()",
+            "print(fruit.getStock('Apples'))"
         ]
     }
 }
@@ -241,7 +241,7 @@ Functions that are added to the library at the end, these could be functions for
                 }
             },
             "code": [
-                'return self.auth["api-key"]'
+                "return self.auth['api-key']"
             ]
         }
     }
