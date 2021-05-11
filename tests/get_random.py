@@ -14,12 +14,3 @@ def number(minimum=0, maximum=9999):
     """Generate a random number"""
 
     return random.randint(minimum, maximum)
-
-
-def chars(string_length=8):
-    """Generate a random string of letters and digits"""
-
-    return "".join(
-        random.choice(string.ascii_uppercase + string.digits)
-        for i in range(string_length)
-    )
