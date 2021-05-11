@@ -35,6 +35,11 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -v --cov
+    - name: Submit Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
+        coveralls
   stage_deploy:
     runs-on: ubuntu-latest
     steps:

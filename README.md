@@ -1,5 +1,8 @@
 # Doby
 
+[![Doby unit tests](https://github.com/rorymurdock/doby/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/rorymurdock/doby/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/rorymurdock/doby/badge.svg?branch=main)](https://coveralls.io/github/rorymurdock/doby?branch=main)
+
 Named after [Doby](https://youtu.be/qX1Onl-n4NA?t=55) 🦈 from Anchorman 2
 
 >You talk all that smack and that's the best name you come up with?
