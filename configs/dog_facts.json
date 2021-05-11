@@ -32,7 +32,7 @@
 		},
 		"main": {
 			"run": true,
-			"description": "Get a fact",
+			"description": "Get a fact or 2",
 			"code": [
 				"df = DogFacts()",
 				"",
@@ -46,7 +46,7 @@
 			"fact": {
 				"category": "Dogs",
 				"name": "getFact",
-				"description": "Gets System information",
+				"description": "Gets a dog fact (or many)",
 				"method": "get",
 				"path": "/api/v1/resources/dogs",
 				"header": "rest",
