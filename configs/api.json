@@ -1,0 +1,120 @@
+{
+	"name": "PyTest",
+	"description": "PyTest configuration library",
+	"debug": false,
+	"hostname": {
+		"function": "get_url()"
+	},
+	"headers": {
+		"rest": {
+			"Accept": {
+				"static": "application/json"
+			},
+			"api-key": {
+				"function": "get_api_key()"
+			}
+		}
+	},
+	"functions": {
+		"custom": {
+			"custom_test": {
+				"name": "custom_test",
+				"description": "Custom test description",
+				"parameters": {
+					"pagesize": {
+						"description": "How many results to return",
+						"type": "int",
+						"defaultValue": "500"
+					}
+				},
+				"code": ["return True"]
+			}
+		},
+		"init": {
+			"description": "This is called when the class is initialised",
+			"parameters": {
+				"debug": {
+					"description": "Enables debugging",
+					"type": "bool",
+					"defaultValue": "False"
+				}
+			},
+			"code": ["self.debug = debug"]
+		},
+		"main": {
+			"run": true,
+			"description": "This is the main function",
+			"code": [
+				"uem = WSO()",
+				"print(uem.systemInfo()[\"ProductVersion\"])"
+			]
+		},
+		"endpoint": {
+			"systemInfo": {
+				"category": "SystemAPIs",
+				"name": "systemInfo",
+				"description": "Gets System information",
+				"method": "get",
+				"path": "/api/system/info",
+				"header": "rest",
+				"returns": "response.text",
+				"checkHttpResponse": true,
+				"payload": {
+					"pagesize": {
+						"static": 500
+					},
+					"page": {
+						"variable": "page"
+					},
+					"apikey": {
+						"function": "get_api_key()"
+					}
+				},
+				"parameters": {
+					"pagesize": {
+						"description": "How many results to return",
+						"type": "int",
+						"defaultValue": "500"
+					},
+					"page": {
+						"description": "Which page of results to return",
+						"type": "int",
+						"defaultValue": "0"
+					}
+				},
+				"code": {
+					"start": [],
+					"mid": [],
+					"end": []
+				},
+				"querystring": {
+					"pagesize": {
+						"static": 500
+					},
+					"page": {
+						"variable": "page"
+					},
+					"apikey": {
+						"function": "get_api_key()"
+					}
+				}
+			}
+		}
+	},
+	"requirements": {
+		"os": {
+			"builtin": true,
+			"operator": "==",
+			"version": "1.0.0"
+		},
+		"reqrest": {},
+		"panda": {
+			"builtin": false,
+			"operator": "==",
+			"version": "1.0.0"
+		}
+	},
+	".gitignore": [
+		"*.pyc"
+	]
+}

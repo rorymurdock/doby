@@ -1,0 +1,70 @@
+{
+	"name": "DogFacts",
+	"description": "Dog facts API library",
+	"debug": false,
+	"hostname": {
+		"static": "dog-facts-api.herokuapp.com"
+	},
+    "requirements": {
+		"reqrest": {},
+        "json": {
+            "builtin": true
+        }
+	},
+	"headers": {
+		"rest": {
+			"Accept": {
+				"static": "application/json"
+			}
+		}
+	},
+	"functions": {
+		"init": {
+			"description": "This is called when the class is initialised",
+			"parameters": {
+				"debug": {
+					"description": "Enables debugging",
+					"type": "bool",
+					"defaultValue": "False"
+				}
+			},
+			"code": ["self.debug = debug"]
+		},
+		"main": {
+			"run": true,
+			"description": "Get a fact",
+			"code": [
+				"df = DogFacts()",
+				"",
+				"facts = df.getFact(2)",
+				"",
+				"for fact in facts:",
+				"    print(fact[\"fact\"])"
+			]
+		},
+		"endpoint": {
+			"fact": {
+				"category": "Dogs",
+				"name": "getFact",
+				"description": "Gets System information",
+				"method": "get",
+				"path": "/api/v1/resources/dogs",
+				"header": "rest",
+				"returns": "response.text",
+				"checkHttpResponse": true,
+				"parameters": {
+					"number_of_facts": {
+						"description": "How many facts to get",
+						"type": "int",
+						"defaultValue": "1"
+					}
+				},
+				"querystring": {
+					"number": {
+						"variable": "number_of_facts"
+					}
+				}
+			}
+		}
+	}
+}
