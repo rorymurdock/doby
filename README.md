@@ -32,7 +32,7 @@ And the optional argument of
 
 |Name|Value|Description|Optional|
 |-|-|-|-|
-|debug||Enables debug logging|Yes|
+|-v||Enables debug logging|Yes|
 
 Example:
 
