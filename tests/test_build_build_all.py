@@ -162,6 +162,6 @@ def test_build_file():
             'with open("README.md", "r") as fh:',
             "    LONG_DESCRIPTION = fh.read()",
             "",
-            'setuptools.setup(version = "1.0.0", author = "Me", author_email = "me@example.com", url = "https://example.com", description = "PyTest configuration library", long_description=LONG_DESCRIPTION, long_description_content_type="text/markdown"classifiers=[], install_requires=[\'reqrest\', \'panda\'], include_package_data=True)',
+            'setuptools.setup(name="PyTest", version="1.0.0", author="Me", author_email="me@example.com", url="https://example.com", description="PyTest configuration library", long_description=LONG_DESCRIPTION, long_description_content_type="text/markdown", classifiers=[], install_requires=[\'reqrest\', \'panda\'], include_package_data=True)',
         ],
     }

@@ -56,11 +56,13 @@ def test_build_setup_no_extras():
         'with open("README.md", "r") as fh:',
         "    LONG_DESCRIPTION = fh.read()",
         "",
-        'setuptools.setup(version = "1.0.0", author = "Me", author_email = '
-        '"me@example.com", url = "https://example.com", description = "fruitTest '
-        'configuration library", long_description=LONG_DESCRIPTION, '
-        'long_description_content_type="text/markdown"classifiers=[], '
-        "install_requires=['reqrest', 'apple', 'pear', 'lime'], include_package_data=True)",
+        'setuptools.setup(name="fruitTest", version="1.0.0", author="Me", '
+        'author_email="me@example.com", url="https://example.com", '
+        'description="fruitTest configuration library", '
+        "long_description=LONG_DESCRIPTION, "
+        'long_description_content_type="text/markdown", classifiers=[], '
+        "install_requires=['reqrest', 'apple', 'pear', 'lime'], "
+        "include_package_data=True)",
     ]
 
 
@@ -93,12 +95,13 @@ def test_build_setup_all():
         'with open("README.md", "r") as fh:',
         "    LONG_DESCRIPTION = fh.read()",
         "",
-        'setuptools.setup(version = "1.0.0", author = "Me", author_email = '
-        '"me@example.com", url = "https://example.com", description = "fruitTest '
-        'configuration library", long_description=LONG_DESCRIPTION, '
-        'long_description_content_type="text/markdown"classifiers=["Development '
+        'setuptools.setup(name="fruitTest", version="1.0.0", author="Me", '
+        'author_email="me@example.com", url="https://example.com", '
+        'description="fruitTest configuration library", '
+        "long_description=LONG_DESCRIPTION, "
+        'long_description_content_type="text/markdown", classifiers=["Development '
         'Status :: 5 - Production/Stable","License Status :: OSI Approved :: Apache '
         'Software License","Operating System :: OS Independent","Programming Language '
-        ":: Python :: 3\",], install_requires=['reqrest', 'apple', 'pear', 'lime'], "
-        "include_package_data=True)",
+        ":: Python :: 3\",], install_requires=['reqrest', 'apple', 'pear', "
+        "'lime'], include_package_data=True)",
     ]
