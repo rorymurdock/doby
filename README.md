@@ -49,7 +49,7 @@ These basic fields will configure the library
 |description|Description of the library|`str`|||||
 |debug|Enables debug logging|`bool`|yes||||
 |requirements|A list of python requirements. you can view a list of automatically added [here](doby/build/imports.py#L14) in `import_list`|`dict`|yes||||
-|||||name|name of the requirement|`str`|
+|||||name|name of the requirement as a parent key `name:{}`|`str`|
 ||||yes|operator|Used in the requirements.txt file {`==`, `>=`, `~=`}|`str`|
 ||||yes|version|version you want for the above|`str`|
 ||||yes|builtin|Is this a built-in package? If so it won't be added to the `requirements.txt`|`bool`|
