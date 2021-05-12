@@ -107,7 +107,6 @@
 			"operator": "==",
 			"version": "1.0.0"
 		},
-		"reqrest": {},
 		"panda": {
 			"builtin": false,
 			"operator": "==",

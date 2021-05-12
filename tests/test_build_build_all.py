@@ -24,7 +24,6 @@ def test_build_file():
             "import logging",
             "import reqrest",
             "import os",
-            "import reqrest",
             "import panda",
             "",
             "class PyTest():",

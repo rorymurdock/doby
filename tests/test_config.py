@@ -283,7 +283,6 @@ def create_test_all_config():
         },
         "requirements": {
             "os": {"builtin": True, "operator": "==", "version": "1.0.0"},
-            "reqrest": {},
             "panda": {"builtin": False, "operator": "==", "version": "1.0.0"},
         },
         ".gitignore": ["*.pyc"],

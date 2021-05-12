@@ -60,7 +60,7 @@ def test_build_setup_no_extras():
         '"me@example.com", url = "https://example.com", description = "fruitTest '
         'configuration library", long_description=LONG_DESCRIPTION, '
         'long_description_content_type="text/markdown"classifiers=[], '
-        "install_requires=['apple', 'pear', 'lime'], include_package_data=True)",
+        "install_requires=['reqrest', 'apple', 'pear', 'lime'], include_package_data=True)",
     ]
 
 
@@ -99,6 +99,6 @@ def test_build_setup_all():
         'long_description_content_type="text/markdown"classifiers=["Development '
         'Status :: 5 - Production/Stable","License Status :: OSI Approved :: Apache '
         'Software License","Operating System :: OS Independent","Programming Language '
-        ":: Python :: 3\",], install_requires=['apple', 'pear', 'lime'], "
+        ":: Python :: 3\",], install_requires=['reqrest', 'apple', 'pear', 'lime'], "
         "include_package_data=True)",
     ]
