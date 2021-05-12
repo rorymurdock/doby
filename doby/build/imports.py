@@ -10,7 +10,7 @@ def build_import(config):
     logging.info("Generating imports: %i", len(requirements))
 
     # Create arrays
-    requirement_list = []
+    requirement_list = ["reqrest"]
     import_list = ["import logging", "import reqrest"]
 
     for requirement in requirements:
@@ -50,7 +50,7 @@ def get_clean_non_built_ins(config):
     logging.info("Generating clean non built-in imports")
 
     # Create arrays
-    requirement_list = []
+    requirement_list = ["reqrest"]
 
     for requirement in config["requirements"]:
         if not utils.key_exists_get_value("builtin",

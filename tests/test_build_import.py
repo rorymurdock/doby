@@ -15,7 +15,7 @@ def test_build_import():
     }
 
     assert imports.build_import(config) == (
-        ["apple", "pear==1.0.0", "lime"],
+        ["reqrest", "apple", "pear==1.0.0", "lime"],
         [
             "import logging",
             "import reqrest",

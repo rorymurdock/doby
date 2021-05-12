@@ -58,7 +58,7 @@ def test_get_imports():
 
     DOBY.reset_config(imports)
     assert DOBY.get_imports() == (
-        ["apple", "pear==1.0.0", "lime"],
+        ["reqrest", "apple", "pear==1.0.0", "lime"],
         [
             "import logging",
             "import reqrest",
@@ -151,7 +151,7 @@ def test_get_setup():
         '"me@example.com", url = "https://example.com", description = "fruitTest '
         'configuration library", long_description=LONG_DESCRIPTION, '
         'long_description_content_type="text/markdown"classifiers=[], '
-        "install_requires=['apple', 'pear', 'lime'], include_package_data=True)",
+        "install_requires=['reqrest', 'apple', 'pear', 'lime'], include_package_data=True)",
     ]
 
 
