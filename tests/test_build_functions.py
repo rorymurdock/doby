@@ -560,11 +560,11 @@ def test_querystring_filter_exists():
 
     function = {"filterQuerystring": True}
 
-    assert functions.querystring_filter_exists(function) == True
+    assert functions.querystring_filter_exists(function) is True
 
     function = {"filterQuerystring": False}
 
-    assert functions.querystring_filter_exists(function) == True
+    assert functions.querystring_filter_exists(function) is True
 
 
 def test_build_querystring_function():
@@ -754,7 +754,6 @@ def test_build_functions_all():
         "apikey": {"function": "get_api_key()"},
     }
     fruit["checkHttpResponse"] = True
-    # fruit["filterQuerystring"] = True #TODO
     fruit = config["functions"]["custom"] = {}
     fruit = config["functions"]["custom"]["apples"] = {
         "name": "get_api_key",
