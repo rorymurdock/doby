@@ -114,6 +114,7 @@ def test_build_functions_basic():
     assert DOBY.get_functions() == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        "",
         '        response = self.api.get("/api/system/info")',
         "",
         "        return response.text",

@@ -205,6 +205,7 @@ Adds a main function to the library if you want to launch it directly
 |payload|The payload for the http request|`dict`|yes||||
 |||||{payload_key_name}|[Dynamically generated key](#dynamically-generated-keys)|`dict`|||||
 |querystring|The querystring for the http request|`dict`|yes||||
+|filterQuerystring|Filters out querystring keys with a `None` value before the request|`bool`|yes||||
 |||||{querystring_key_name}|[Dynamically generated key](#dynamically-generated-keys)|`dict`|||||
 |parameters|Parameters you want to be used. For more information see the [parameters section](#parameters)|`dict`|yes||||
 |code|A list of lines of code you want to add|`dict`|yes||||
