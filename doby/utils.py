@@ -34,6 +34,7 @@ def key_exists_get_value(search_key: str, search_dict: dict):
 
     if key_exists(search_key, search_dict):
         return search_dict[search_key]
+    return False
 
 
 def write_list_to_file(filename, path, data, no_new_line=False):
@@ -208,10 +209,12 @@ def get_variable_keys_value_only(search_dict):
     if key_exists("function", search_dict):
         logging.info("Found function in dict")
         return search_dict["function"]
-    elif key_exists("variable", search_dict):
+
+    if key_exists("variable", search_dict):
         logging.info("Found variable in dict")
         return search_dict["variable"]
-    elif key_exists("static", search_dict):
+
+    if key_exists("static", search_dict):
         if search_dict["static"] in convert_dict:
             logging.info("Found static (None / Bool) in dict")
             return convert_dict[search_dict["static"]]
