@@ -6,7 +6,10 @@ from doby import utils
 def build_import(config):
     """Get the required packages and make requirements and import lists"""
 
-    requirements = config["requirements"]
+    if "requirements" in config.keys():
+        requirements = config["requirements"]
+    else:
+        requirements = {}
     logging.info("Generating imports: %i", len(requirements))
 
     # Create arrays
