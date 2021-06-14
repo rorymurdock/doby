@@ -76,7 +76,10 @@ class check_keys:
                 if key not in allowed:
                     logging.error("%s:%s:%s Unknown key %s" % (path, header, key, key))
                 else:
-                    logging.info("%s:%s:%s key is %s" % (path, header, key, type(config[header][key])))
+                    logging.info(
+                        "%s:%s:%s key is %s"
+                        % (path, header, key, type(config[header][key]))
+                    )
                 # Logging info? TODO
 
     def check_type(self, config, override_config, key, path):
@@ -101,8 +104,7 @@ class check_keys:
             return True
         elif key in override_config.keys():
             logging.info(
-                "%s:%s %skey exists in override config file"
-                % (path, key, optional_str)
+                "%s:%s %skey exists in override config file" % (path, key, optional_str)
             )
             return True
         else:
@@ -191,7 +193,6 @@ class check_keys:
         expected_type = dict
         optional = True
 
-
         if self.think_of_a_better_name(
             self.config, self.override_config, key, path, expected_type, optional
         ):
@@ -199,7 +200,9 @@ class check_keys:
             if key in self.config:
                 for requirement in self.config[key]:
                     if self.config[key][requirement] == {}:
-                        logging.info("%s:%s:%s is a valid requirement", path, key, requirement)
+                        logging.info(
+                            "%s:%s:%s is a valid requirement", path, key, requirement
+                        )
                     else:
                         optional_keys = ["operator", "version", "builtin"]
 
@@ -210,12 +213,18 @@ class check_keys:
             elif key in self.override_config:
                 for requirement in self.override_config[key]:
                     if self.override_config[key][requirement] == {}:
-                        logging.info("%s:%s:%s is a valid requirement", path, key, requirement)
+                        logging.info(
+                            "%s:%s:%s is a valid requirement", path, key, requirement
+                        )
                     else:
                         optional_keys = ["operator", "version", "builtin"]
 
                         self.check_optional_keys_in_dict(
-                            {}, self.override_config[key][requirement], [], optional_keys, "."
+                            {},
+                            self.override_config[key][requirement],
+                            [],
+                            optional_keys,
+                            ".",
                         )
 
         # TODO check requirments
@@ -242,14 +251,20 @@ class check_keys:
         expected_type = dict
         optional = False
 
-        if self.think_of_a_better_name(self.config, self.override_config, key, path, expected_type, optional):
+        if self.think_of_a_better_name(
+            self.config, self.override_config, key, path, expected_type, optional
+        ):
             if key in self.config:
                 for header in self.config[key]:
-                    self.check_function_variable_static(self.config[key][header], ".:headers:"+header)
+                    self.check_function_variable_static(
+                        self.config[key][header], ".:headers:" + header
+                    )
 
             elif key in self.override_config:
                 for header in self.override_config[key]:
-                    self.check_function_variable_static(self.override_config[key][header], ".:headers:"+header)
+                    self.check_function_variable_static(
+                        self.override_config[key][header], ".:headers:" + header
+                    )
 
         # TODO check headers
 
@@ -278,7 +293,8 @@ class check_keys:
             self.override_config["functions"],
             key,
             path,
-            expected_type, optional
+            expected_type,
+            optional,
         )
 
     def check_main_functions(self):
@@ -294,7 +310,8 @@ class check_keys:
             self.override_config["functions"],
             key,
             path,
-            expected_type, optional
+            expected_type,
+            optional,
         )
 
     def check_endpoint_functions(self):
@@ -310,7 +327,8 @@ class check_keys:
             self.override_config["functions"],
             key,
             path,
-            expected_type, optional
+            expected_type,
+            optional,
         )
 
     def check_custom_functions(self):
@@ -326,7 +344,8 @@ class check_keys:
             self.override_config["functions"],
             key,
             path,
-            expected_type, optional
+            expected_type,
+            optional,
         )
 
     def check_setup_py(self):
