@@ -197,7 +197,7 @@ Adds a main function to the library if you want to launch it directly
 |name|Function name|`str`|||||
 |description|Description of what the function does|`dict`|||||
 |method|What method to use eg. get, post, put|`str`|||||
-|path|The URL path to the endpoint `/api/getStock`|`str`|||||
+|path|The URL path to the endpoint `/api/getStock`, this supports variables using [python f strings](https://docs.python.org/3/tutorial/inputoutput.html) '{username}'|`str`|||||
 |header|The name of the header you want to use|`str`|||||
 |returns|What you want to return|`str`|yes||||
 |checkHttpResponse|Check the response against a [list of acceptable HTTP response codes](doby/build/) and returns a `json` object|`bool`|yes||||
