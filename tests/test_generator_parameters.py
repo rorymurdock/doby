@@ -81,4 +81,10 @@ def test_get_parameters_description_required_type():
 
 
 # def test_find_parameter_refs():
-#     parameters.find_parameter_refs()
+#     # definition = {"parameters": {"$ref": "test/123/"}}
+#     definition = {}
+#     definition["parameters"] = {}
+#     definition["parameters"]["inventory-preload"] = {}
+#     definition["parameters"]["inventory-preload"]["name"] = ["inventory-preload"]
+#     definition["parameters"]["inventory-preload"]["$ref"] = "#/components/schemas/Authorization"
+#     assert parameters.find_parameter_refs(definition) == "hello"

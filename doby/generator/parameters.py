@@ -62,20 +62,20 @@ def get_parameters(parameters):
     return params_out
 
 
-def find_parameter_refs(definition):
-    """Resolve internal parameter links"""
-    params_out = {}
+# def find_parameter_refs(definition):
+#     """Resolve internal parameter links"""
+#     params_out = {}
 
-    for param in definition["parameters"]:
-        if "$ref" in param.keys():
-            ref_path = param["$ref"].split("/")
-            del ref_path[0]
-            print(ref_path)
-            val = definition
-            for recursive_key in ref_path:
-                val = val[recursive_key]
-            print(val)
-            param = val
-        params_out[ref_path(param["name"].lower())] = param
+#     for param in definition["parameters"]:
+#         if "$ref" in definition["parameters"][param].keys():
+#             ref_path = definition["parameters"][param]["$ref"].split("/")
+#             del ref_path[0]
+#             logging.info("Found internal reference %s", ref_path)
+#             val = definition
+#             for recursive_key in ref_path:
+#                 val = val[recursive_key]
+#             print(val)
+#             param = val
+#         params_out[ref_path(definition["parameters"][param]["name"].lower())] = param
 
-    return params_out
+#     return params_out
