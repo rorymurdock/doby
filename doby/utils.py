@@ -148,11 +148,10 @@ def get_parameters(functions: dict, function_name):
                     parameter_dict["defaultValue"],
                 )
 
-        # Don't think is is needed
-        # # Just a std arg
-        # else:
-        #     logging.info("%s: %s added", function_name, parameter_name)
-        #     standard_parameter_out += ", %s" % parameter_name
+        # Just a std arg
+        else:
+            logging.info("%s: %s added", function_name, parameter_name)
+            standard_parameter_out += ", %s" % parameter_name
 
     # A little messy but combines the var types in order so you don't get defaults before non defaults
     return (

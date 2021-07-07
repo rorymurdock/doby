@@ -288,7 +288,7 @@ def get_http_response(function):
 
     http_response_out.append(
         utils.indent(
-            f'response = self.{http_function}.{method}("{path}"{querystring}{payload})',
+            f'response = self.{http_function}.{method}(f"{path}"{querystring}{payload})',
             2))
 
     http_response_out.append("")

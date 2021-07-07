@@ -144,6 +144,18 @@ def test_get_parameters_empty():
     assert get_parameters(test, "class") == ""
 
 
+def test_get_parameters_str_only():
+    """Test get_parameters_str"""
+
+    test = {
+        "get_username": {
+            "parameters": {"username": {}}
+        }
+    }
+
+    assert get_parameters(test, "get_username") == ", username"
+
+
 def test_get_parameters_str():
     """Test get_parameters_str"""
 

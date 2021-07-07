@@ -55,7 +55,7 @@ def test_build_file():
             '        payload["page"] = page',
             '        payload["apikey"] = get_api_key()',
             "",
-            '        response = self.rest.get("/api/system/info", querystring=querystring, payload=payload)',
+            '        response = self.rest.get(f"/api/system/info", querystring=querystring, payload=payload)',
             "",
             "        if self.check_http_response(response):",
             "            return json.loads(response.text)",

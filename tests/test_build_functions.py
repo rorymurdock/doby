@@ -215,7 +215,7 @@ def test_get_http_response_querystring_payload():
         "payload": {},
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get("/test/api", querystring=querystring, '
+        '        response = self.api.get(f"/test/api", querystring=querystring, '
         "payload=payload)",
         "",
     ]
@@ -232,7 +232,7 @@ def test_get_http_response_querystring():
         "querystring": {},
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get("/test/api", querystring=querystring)',
+        '        response = self.api.get(f"/test/api", querystring=querystring)',
         "",
     ]
 
@@ -247,7 +247,7 @@ def test_get_http_response():
         "path": "/test/api",
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get("/test/api")',
+        '        response = self.api.get(f"/test/api")',
         "",
     ]
 
@@ -395,8 +395,7 @@ def test_build_functions_basic():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        "",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
     ]
@@ -426,7 +425,7 @@ def test_build_functions_code_start():
         '        """',
         "",
         "        line 1",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
     ]
@@ -461,7 +460,7 @@ def test_build_functions_querystring():
         '        querystring["page"] = page',
         '        querystring["apikey"] = get_api_key()',
         "",
-        '        response = self.api.get("/api/system/info", querystring=querystring)',
+        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
         "",
         "        return response.text",
     ]
@@ -496,7 +495,7 @@ def test_build_functions_payload():
         '        payload["page"] = page',
         '        payload["apikey"] = get_api_key()',
         "",
-        '        response = self.api.get("/api/system/info", payload=payload)',
+        '        response = self.api.get(f"/api/system/info", payload=payload)',
         "",
         "        return response.text",
     ]
@@ -524,7 +523,7 @@ def test_build_functions_code_mid():
         '        """Let\'s peel"""',
         "",
         "        line 2",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
     ]
@@ -548,8 +547,7 @@ def test_check_http_response_exists():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        "",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
     ]
@@ -679,8 +677,7 @@ def test_build_functions_code_end():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        "",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
         "        if self.check_http_response(response):",
         "            return json.loads(response.text)",
@@ -758,7 +755,6 @@ def test_build_functions_all():
     fruit = config["functions"]["custom"]["apples"] = {
         "name": "get_api_key",
         "description": "Custom test description",
-        "parameters": {"self": {"description": "Class built-in"}},
         "code": ['return self.auth["api-key"]'],
     }
 
@@ -778,7 +774,7 @@ def test_build_functions_all():
         '        payload["apikey"] = get_api_key()',
         "",
         "        line 2",
-        '        response = self.api.get("/api/system/info", querystring=querystring, '
+        '        response = self.api.get(f"/api/system/info", querystring=querystring, '
         "payload=payload)",
         "",
         "        if self.check_http_response(response):",
