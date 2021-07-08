@@ -15,16 +15,17 @@ def build_setup(config):
             logging.error("Field %s is missing in setup dict")
             return ""
 
-    setup_parameters = "version = \"%s\"" % config["setup"]["version"]
-    setup_parameters += ", author = \"%s\"" % config["setup"]["author"]
-    setup_parameters += ", author_email = \"%s\"" % config["setup"][
+    setup_parameters = "name=\"%s\"" % config["name"]
+    setup_parameters += ", version=\"%s\"" % config["setup"]["version"]
+    setup_parameters += ", author=\"%s\"" % config["setup"]["author"]
+    setup_parameters += ", author_email=\"%s\"" % config["setup"][
         "author_email"]
-    setup_parameters += ", url = \"%s\"" % config["setup"]["url"]
-    setup_parameters += ", description = \"%s\"" % config["description"]
+    setup_parameters += ", url=\"%s\"" % config["setup"]["url"]
+    setup_parameters += ", description=\"%s\"" % config["description"]
     setup_parameters += ", long_description=LONG_DESCRIPTION"
     setup_parameters += ", long_description_content_type=\"text/markdown\""
 
-    setup_parameters += "classifiers=["
+    setup_parameters += ", classifiers=["
 
     if utils.key_exists("developmentStatus", config["setup"]):
         setup_parameters += "\"Development Status :: %s\"," % config["setup"][

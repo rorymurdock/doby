@@ -133,3 +133,4 @@ auth*.json
 .DS_Store
 export/
 .devcontainer/
+.vscode/

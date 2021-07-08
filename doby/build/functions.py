@@ -10,6 +10,7 @@ def build_functions(config):
 
     # Used to add checkHttpResponse function if required
     add_check_http_response = False
+    add_filter_querystring = False
 
     for function_category_name in ["endpoint", "custom"]:
         if utils.key_exists(function_category_name, config["functions"]):
@@ -46,8 +47,20 @@ def build_functions(config):
                     utils.indent(
                         f"def {function_name_key}(self{utils.get_parameters(function_cat, function_name)}):",
                         1))
-                function_out.append(
-                    utils.indent(f"\"\"\"{function['description']}\"\"\"", 2))
+                if "\n" in function['description']:
+                    # Multiline description
+                    function_out.append(utils.indent("\"\"\"", 2))
+                    # 0 indent for better black formatting
+                    function_out.append(
+                        utils.indent(f"{function['description']}", 0))
+                    function_out.append(utils.indent("\"\"\"", 2))
+                else:
+                    # Single line description
+                    function_out.append(
+                        utils.indent(f"\"\"\"{function['description']}\"\"\"",
+                                     2))
+
+                function_out.append("")  # Add a new line
 
                 if utils.key_exists("code", function):
                     if isinstance(function["code"], list):
@@ -66,6 +79,16 @@ def build_functions(config):
                     logging.info("%s:%s adding querystring",
                                  function_category_name, function_name)
                     function_out += get_querystring(function)
+
+                # Insert the code to filter the querystring
+                if querystring_filter_exists(function) and querystring_exists(
+                        function):
+                    logging.info("%s:%s adding querystring filter",
+                                 function_category_name, function_name)
+                    function_out += get_querystring_filter(function)
+
+                    # Enable adding the response function at the end
+                    add_filter_querystring = True
 
                 # Get payload
                 if payload_exists(function):
@@ -118,6 +141,17 @@ def build_functions(config):
                                 config["functions"]["custom"]):
             # Not added, lets add it
             functions_out += get_check_http_response_function()
+
+    # Check if the filterQuerystring function has been added yet
+    if add_filter_querystring:
+        if not utils.key_exists("custom", config["functions"]):
+            config["functions"]["custom"] = {}
+
+        # If the code isn't there already
+        if not utils.key_exists("filterQuerystring",
+                                config["functions"]["custom"]):
+            # Not added, lets add it
+            functions_out += get_querystring_filter_function()
 
     if utils.key_exists("main", config["functions"]):
         # Add main
@@ -268,6 +302,12 @@ def check_http_response_exists(function):
     return utils.key_exists("checkHttpResponse", function)
 
 
+def querystring_filter_exists(function):
+    """Determine if querystring_filter exists in config"""
+
+    return utils.key_exists("filterQuerystring", function)
+
+
 def get_check_http_response(function):
     """Get checkHttpResponse from config"""
 
@@ -288,6 +328,23 @@ def get_check_http_response(function):
                 "        else:",
                 "            logging.error('Error with HTTP request')",
                 "            return False", ""
+            ]
+
+            return code
+    return []
+
+
+def get_querystring_filter(function):
+    """Get filterQuerystring from config"""
+
+    # If filterQuerystring present then add the function in custom functions
+    if utils.key_exists("filterQuerystring", function):
+        logging.info("%s: Adding querystring filter code", function["name"])
+
+        if function["filterQuerystring"]:
+            code = [
+                "        querystring = self.filter_querystring(querystring)",
+                ""
             ]
 
             return code
@@ -343,3 +400,23 @@ def get_check_http_response_function():
     ]
 
     return get_check_http_response_function_list
+
+
+def get_querystring_filter_function():
+    """Returns the function for filtering querystrings"""
+
+    logging.info("Creating querystring filtering function")
+
+    filter_querystring_list = [
+        "    def filter_querystring(self, querystring):",
+        '        """Removes None value keys from the querystring"""',
+        "",
+        "        querystring_out = {}",
+        "        for key in querystring:",
+        "            if querystring[key] != None:",
+        "                querystring_out[key] = querystring[key]",
+        "",
+        "        return querystring_out",
+    ]
+
+    return filter_querystring_list

@@ -26,3 +26,14 @@ def test_build_import():
             "",
         ],
     )
+
+
+def test_build_import_empty():
+    """Test build_imports"""
+
+    config = {}
+
+    assert imports.build_import(config) == (
+        ["reqrest"],
+        ["import logging", "import reqrest", ""],
+    )

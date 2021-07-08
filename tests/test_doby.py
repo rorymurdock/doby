@@ -114,6 +114,7 @@ def test_build_functions_basic():
     assert DOBY.get_functions() == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
@@ -147,11 +148,13 @@ def test_get_setup():
         'with open("README.md", "r") as fh:',
         "    LONG_DESCRIPTION = fh.read()",
         "",
-        'setuptools.setup(version = "1.0.0", author = "Me", author_email = '
-        '"me@example.com", url = "https://example.com", description = "fruitTest '
-        'configuration library", long_description=LONG_DESCRIPTION, '
-        'long_description_content_type="text/markdown"classifiers=[], '
-        "install_requires=['reqrest', 'apple', 'pear', 'lime'], include_package_data=True)",
+        'setuptools.setup(name="fruitTest", version="1.0.0", author="Me", '
+        'author_email="me@example.com", url="https://example.com", '
+        'description="fruitTest configuration library", '
+        "long_description=LONG_DESCRIPTION, "
+        'long_description_content_type="text/markdown", classifiers=[], '
+        "install_requires=['reqrest', 'apple', 'pear', 'lime'], "
+        "include_package_data=True)",
     ]
 
 

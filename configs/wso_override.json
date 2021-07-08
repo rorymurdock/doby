@@ -1,0 +1,131 @@
+{
+	"name": "wso",
+	"description": "Workspace ONE UEM Library",
+	"hostname": {
+		"variable": "self.auth[\"url\"]"
+	},
+	"requirements": {
+		"json": {
+			"builtin": true
+		}
+	},
+	"headers": {
+		"v1": {
+			"Accept": {
+				"static": "application/json;version=1"
+			},
+			"Content-Type": {
+				"static": "application/json"
+			},
+			"Authorization": {
+				"function": "self.get_auth()"
+			},
+			"aw-tenant-code": {
+				"function": "self.get_tenant_code()"
+			}
+		},
+		"v2": {
+			"Accept": {
+				"static": "application/json;version=2"
+			},
+			"Content-Type": {
+				"static": "application/json"
+			},
+			"Authorization": {
+				"function": "self.get_auth()"
+			},
+			"aw-tenant-code": {
+				"function": "self.get_tenant_code()"
+			}
+		},
+		"v3": {
+			"Accept": {
+				"static": "application/json;version=3"
+			},
+			"Content-Type": {
+				"static": "application/json"
+			},
+			"Authorization": {
+				"function": "self.get_auth()"
+			},
+			"aw-tenant-code": {
+				"function": "self.get_tenant_code()"
+			}
+		},
+		"v4": {
+			"Accept": {
+				"static": "application/json;version=4"
+			},
+			"Content-Type": {
+				"static": "application/json"
+			},
+			"Authorization": {
+				"function": "self.get_auth()"
+			},
+			"aw-tenant-code": {
+				"function": "self.get_tenant_code()"
+			}
+		}
+	},
+	"functions": {
+		"init": {
+			"code": [
+				"self.getConfig()"
+			]
+		},
+		"main": {
+			"run": true,
+			"description": "This is the main function",
+			"code": [
+				"uem = wso()",
+				"print(uem.systemInfo()[\"ProductVersion\"])"
+			]
+		},
+		"endpoint": {
+			"getInfov1": {
+				"name": "systemInfo"
+			}
+		},
+		"custom": {
+			"getConfig": {
+				"name": "getConfig",
+				"description": "Loads the config file",
+				"parameters": {
+					"self": {
+						"description": "Class built-in"
+					}
+				},
+				"code": [
+					"with open('auth.json') as f:",
+					"  auth = json.load(f)",
+					"",
+					"self.auth = auth"
+				]
+			},
+			"get_auth": {
+				"name": "get_auth",
+				"description": "returns the BASIC auth from the config file",
+				"parameters": {
+					"self": {
+						"description": "Class built-in"
+					}
+				},
+				"code": [
+					"return \"Basic \"+self.auth[\"basic\"]"
+				]
+			},
+			"get_tenant_code": {
+				"name": "get_tenant_code",
+				"description": "returns the tenant code from the config file",
+				"parameters": {
+					"self": {
+						"description": "Class built-in"
+					}
+				},
+				"code": [
+					"return self.auth[\"aw-tenant-code\"]"
+				]
+			}
+		}
+	}
+}

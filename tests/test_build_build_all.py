@@ -44,6 +44,7 @@ def test_build_file():
             "",
             "    def systemInfo(self, pagesize: int = 500, page: int = 0):",
             '        """Gets System information"""',
+            "",
             "        querystring = {}",
             '        querystring["pagesize"] = 500',
             '        querystring["page"] = page',
@@ -64,6 +65,7 @@ def test_build_file():
             "",
             "    def custom_test(self, pagesize: int = 500):",
             '        """Custom test description"""',
+            "",
             "    def check_http_response(self, response, expected_code=None):",
             '        """Checks if response is a expected or a known good response"""',
             "    ",
@@ -162,6 +164,6 @@ def test_build_file():
             'with open("README.md", "r") as fh:',
             "    LONG_DESCRIPTION = fh.read()",
             "",
-            'setuptools.setup(version = "1.0.0", author = "Me", author_email = "me@example.com", url = "https://example.com", description = "PyTest configuration library", long_description=LONG_DESCRIPTION, long_description_content_type="text/markdown"classifiers=[], install_requires=[\'reqrest\', \'panda\'], include_package_data=True)',
+            'setuptools.setup(name="PyTest", version="1.0.0", author="Me", author_email="me@example.com", url="https://example.com", description="PyTest configuration library", long_description=LONG_DESCRIPTION, long_description_content_type="text/markdown", classifiers=[], install_requires=[\'reqrest\', \'panda\'], include_package_data=True)',
         ],
     }

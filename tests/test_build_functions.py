@@ -301,6 +301,23 @@ def test_get_check_http_response_expected_code():
     ]
 
 
+def test_get_querystring_filter():
+    """Test get_querystring_filter"""
+
+    function = {}
+    function["filterQuerystring"] = True
+    function["name"] = "Test"
+
+    assert functions.get_querystring_filter(function) == [
+        "        querystring = self.filter_querystring(querystring)",
+        "",
+    ]
+
+    function["filterQuerystring"] = False
+
+    assert functions.get_querystring_filter(function) == []
+
+
 def test_return_exists_true():
     """Test return_exists_true"""
 
@@ -378,6 +395,7 @@ def test_build_functions_basic():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
@@ -393,7 +411,7 @@ def test_build_functions_code_start():
     config["functions"]["endpoint"]["peel_fruit"] = {}
     fruit = config["functions"]["endpoint"]["peel_fruit"]
     fruit["name"] = "code_test"
-    fruit["description"] = "Let's peel"
+    fruit["description"] = "Let's peel\nSome fruits"
     fruit["header"] = "api"
     fruit["method"] = "get"
     fruit["path"] = "/api/system/info"
@@ -403,7 +421,10 @@ def test_build_functions_code_start():
 
     assert functions.build_functions(config) == [
         "    def code_test(self):",
-        '        """Let\'s peel"""',
+        '        """',
+        "Let's peel\n" "Some fruits",
+        '        """',
+        "",
         "        line 1",
         '        response = self.api.get(f"/api/system/info")',
         "",
@@ -434,6 +455,7 @@ def test_build_functions_querystring():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        "",
         "        querystring = {}",
         '        querystring["pagesize"] = 500',
         '        querystring["page"] = page',
@@ -468,6 +490,7 @@ def test_build_functions_payload():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        "",
         "        payload = {}",
         '        payload["pagesize"] = 500',
         '        payload["page"] = page',
@@ -499,6 +522,7 @@ def test_build_functions_code_mid():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        "",
         "        line 2",
         '        response = self.api.get(f"/api/system/info")',
         "",
@@ -524,9 +548,114 @@ def test_check_http_response_exists():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
+    ]
+
+
+def test_querystring_filter_exists():
+    """Test querystring_filter_exists"""
+
+    function = {"filterQuerystring": True}
+
+    assert functions.querystring_filter_exists(function) is True
+
+    function = {"filterQuerystring": False}
+
+    assert functions.querystring_filter_exists(function) is True
+
+
+def test_build_querystring_function():
+    """Test build_functions_code_end"""
+
+    config = {}
+    config["functions"] = {}
+    config["functions"]["endpoint"] = {}
+    config["functions"]["endpoint"]["peel_fruit"] = {}
+    fruit = config["functions"]["endpoint"]["peel_fruit"]
+    fruit["name"] = "code_test"
+    fruit["description"] = "Let's peel"
+    fruit["header"] = "api"
+    fruit["method"] = "get"
+    fruit["path"] = "/api/system/info"
+    fruit["filterQuerystring"] = True
+    fruit["querystring"] = {}
+    fruit["querystring"]["test"] = {"static": "testing"}
+
+    assert functions.build_functions(config) == [
+        "    def code_test(self):",
+        '        """Let\'s peel"""',
+        "",
+        "        querystring = {}",
+        '        querystring["test"] = "testing"',
+        "",
+        "        querystring = self.filter_querystring(querystring)",
+        "",
+        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
+        "",
+        "    def filter_querystring(self, querystring):",
+        '        """Removes None value keys from the querystring"""',
+        "",
+        "        querystring_out = {}",
+        "        for key in querystring:",
+        "            if querystring[key] != None:",
+        "                querystring_out[key] = querystring[key]",
+        "",
+        "        return querystring_out",
+    ]
+
+
+def test_build_querystring_function_missing_qs():
+    """Test build_functions_code_end"""
+
+    config = {}
+    config["functions"] = {}
+    config["functions"]["endpoint"] = {}
+    config["functions"]["endpoint"]["peel_fruit"] = {}
+    fruit = config["functions"]["endpoint"]["peel_fruit"]
+    fruit["name"] = "code_test"
+    fruit["description"] = "Let's peel"
+    fruit["header"] = "api"
+    fruit["method"] = "get"
+    fruit["path"] = "/api/system/info"
+    fruit["filterQuerystring"] = True
+
+    assert functions.build_functions(config) == [
+        "    def code_test(self):",
+        '        """Let\'s peel"""',
+        "",
+        '        response = self.api.get(f"/api/system/info")',
+        "",
+    ]
+
+
+def test_build_querystring_function_no_filter():
+    """Test build_functions_code_end"""
+
+    config = {}
+    config["functions"] = {}
+    config["functions"]["endpoint"] = {}
+    config["functions"]["endpoint"]["peel_fruit"] = {}
+    fruit = config["functions"]["endpoint"]["peel_fruit"]
+    fruit["name"] = "code_test"
+    fruit["description"] = "Let's peel"
+    fruit["header"] = "api"
+    fruit["method"] = "get"
+    fruit["path"] = "/api/system/info"
+    fruit["querystring"] = {}
+    fruit["querystring"]["test"] = {"static": "testing"}
+
+    assert functions.build_functions(config) == [
+        "    def code_test(self):",
+        '        """Let\'s peel"""',
+        "",
+        "        querystring = {}",
+        '        querystring["test"] = "testing"',
+        "",
+        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
+        "",
     ]
 
 
@@ -550,6 +679,7 @@ def test_build_functions_code_end():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        if self.check_http_response(response):",
@@ -634,6 +764,7 @@ def test_build_functions_all():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        "",
         "        line 1",
         "        querystring = {}",
         '        querystring["pagesize"] = 500',
@@ -659,6 +790,7 @@ def test_build_functions_all():
         "        return response.text",
         "    def get_api_key(self):",
         '        """Custom test description"""',
+        "",
         '        return self.auth["api-key"]',
         "",
         "    def check_http_response(self, response, expected_code=None):",
