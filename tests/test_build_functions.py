@@ -395,6 +395,7 @@ def test_build_functions_basic():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
@@ -547,6 +548,7 @@ def test_check_http_response_exists():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        return response.text",
@@ -591,7 +593,7 @@ def test_build_querystring_function():
         "",
         "        querystring = self.filter_querystring(querystring)",
         "",
-        '        response = self.api.get("/api/system/info", querystring=querystring)',
+        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
         "",
         "    def filter_querystring(self, querystring):",
         '        """Removes None value keys from the querystring"""',
@@ -624,7 +626,7 @@ def test_build_querystring_function_missing_qs():
         "    def code_test(self):",
         '        """Let\'s peel"""',
         "",
-        '        response = self.api.get("/api/system/info")',
+        '        response = self.api.get(f"/api/system/info")',
         "",
     ]
 
@@ -652,7 +654,7 @@ def test_build_querystring_function_no_filter():
         "        querystring = {}",
         '        querystring["test"] = "testing"',
         "",
-        '        response = self.api.get("/api/system/info", querystring=querystring)',
+        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
         "",
     ]
 
@@ -677,6 +679,7 @@ def test_build_functions_code_end():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
+        '',
         '        response = self.api.get(f"/api/system/info")',
         "",
         "        if self.check_http_response(response):",
