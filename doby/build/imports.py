@@ -13,8 +13,8 @@ def build_import(config):
     logging.info("Generating imports: %i", len(requirements))
 
     # Create arrays
-    requirement_list = ["reqrest"]
-    import_list = ["import logging", "import reqrest"]
+    requirement_list = ["requests"]
+    import_list = ["import logging", "import requests"]
 
     for requirement in requirements:
         # Add each import into file imports
@@ -23,6 +23,7 @@ def build_import(config):
 
         if utils.key_exists_get_value("builtin", requirements[requirement]):
             # Built in don't need adding to requirements.txt
+            # TODO allow requests version pinning
             logging.info("%s is built in", requirement)
         else:
             # Combine all the strings (if not None)

@@ -107,6 +107,12 @@ def build_functions(config):
                                  function_category_name, function_name)
                     function_out += get_http_response(function)
 
+                # Insert end code
+                if function_code_exists("end", function):
+                    logging.info("%s:%s adding end code",
+                                 function_category_name, function_name)
+                    function_out += get_function_code("end", function)
+
                 # Insert the code to check the http response
                 if check_http_response_exists(function):
                     logging.info("%s:%s adding check http response",
@@ -115,12 +121,6 @@ def build_functions(config):
 
                     # Enable adding the response function at the end
                     add_check_http_response = True
-
-                # Insert end code
-                if function_code_exists("end", function):
-                    logging.info("%s:%s adding end code",
-                                 function_category_name, function_name)
-                    function_out += get_function_code("end", function)
 
                 # Insert end code
                 if return_exists(function):
@@ -272,24 +272,50 @@ def get_http_response(function):
     """Make response from config"""
 
     http_response_out = []
-    http_function = function["header"]
+    header = function["header"]
     method = function["method"]
     path = function["path"]
 
-    if utils.key_exists("querystring", function):
-        querystring = ', querystring=querystring'
-    else:
-        querystring = ""
+    http_parameters = ""
 
-    if utils.key_exists("payload", function):
-        payload = ', payload=payload'
-    else:
-        payload = ""
+    # TODO migrate all parameters under the response
+    if utils.key_exists("request", function):
+        for key in ["files", "timeout"]:
+            if utils.key_exists(key, function["request"]):
+                print(f"Type of {key}: %s" % type(function["request"][key]))
+                print(function["request"][key])
+                if isinstance(function["request"][key], dict):
+                    http_parameters += f', {key}=%s' % utils.get_variable_keys_value_only(function["request"][key])
+                else:
+                    http_parameters += f', {key}={function["request"][key]}'
 
+    for key in ["querystring", "payload"]:
+        if utils.key_exists(key, function):
+            print(f"Type of {key}: %s" % type(function[key]))
+            print("returns %s" % utils.get_variable_keys_value_only(function[key]))
+            # if isinstance(function[key], dict):
+            #     http_parameters += f', {key}=%s' % utils.get_variable_keys_value_only(function[key])
+            # else:
+            # TODO come back and fix
+            if key == "querystring":
+                http_parameters += f', params={key}'
+            elif key == "payload":
+                http_parameters += f', data={key}'
+            else:
+                http_parameters += f', {key}={key}'
+
+            # print(function)
+
+    # if utils.key_exists("headerOverride") # TODO add header override
     http_response_out.append(
         utils.indent(
-            f'response = self.{http_function}.{method}(f"{path}"{querystring}{payload})',
+            f'response = requests.{method}(f"https://{{self.hostname}}{path}", headers=self.{header}{http_parameters})',
             2))
+
+    # http_response_out.append(
+    #     utils.indent(
+    #         f'response = self.{http_function}.{method}(f"{path}"{querystring}{payload}{file})',
+    #         2))
 
     http_response_out.append("")
 

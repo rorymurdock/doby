@@ -51,13 +51,13 @@ def get_headers(config, indent_level=2):
             header_out.append(
                 utils.indent(f"# {header_name} headers", indent_level))
             header_out.append(
-                utils.indent(f"{header_name} = {{}}", indent_level))
+                utils.indent(f"self.{header_name} = {{}}", indent_level))
             for header_item in config["headers"][header_name]:
 
                 header_out.append(
                     utils.indent(
                         utils.generate_dictionary_variable_types(
-                            header_name, header_item,
+                            "self."+header_name, header_item,
                             config["headers"][header_name][header_item]),
                         indent_level))
 
@@ -67,16 +67,12 @@ def get_headers(config, indent_level=2):
 
 
 def get_http_response_function(config, indent_level=2):
-    """Create a http function for each header"""
+    """Add the requests variables"""
     response_out = []
-    debug = config['debug']
+    # debug_config = config['debug']
     if utils.key_exists("headers", config):
-        response_out.append(utils.indent("# REST Functions", 2))
-        for header_name in config["headers"]:
-            hostname = utils.get_variable_keys_value_only(config["hostname"])
-            response_out.append(
-                utils.indent(
-                    f"self.{header_name} = reqrest.REST(url={hostname}, debug={debug}, headers={header_name})",
-                    indent_level))
+        response_out.append(utils.indent("# Requests variables", 2))
+        response_out.append(utils.indent("self.hostname = %s" % utils.get_variable_keys_value_only(config["hostname"]), 2))
+        response_out.append(utils.indent("self.debug = debug", 2))
 
     return response_out
