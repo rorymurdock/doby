@@ -79,6 +79,8 @@ def main(args):
     if not os.path.isdir(f"{args.output}/{lib_name}"):
         os.mkdir(f"{args.output}/{lib_name}")
 
+    # TODO add version pinning support for config
+
     print(f"Building {lib_name}")
 
     all_files = doby.build_file()

@@ -92,7 +92,7 @@ def test_load_config():
         "headers": {},
         "name": "fruitTest",
         "override": False,
-        "hostname": 'self.auth["url"]',
+        "hostname": {"function": 'self.auth["url"]'},
     }
 
 
@@ -140,7 +140,7 @@ def test_load_config_override():
         "headers": {},
         "name": "fruitTest",
         "override": False,
-        "hostname": 'self.auth["url"]',
+        "hostname": {"function": 'self.auth["url"]'},
     }
 
     write_config(
@@ -154,7 +154,7 @@ def test_load_config_override():
         "functions": {},
         "headers": {},
         "name": "PyTest override configuration",
-        "hostname": 'self.auth["url"]',
+        "hostname": {"function": 'self.auth["url"]'},
     }
 
 
@@ -168,7 +168,8 @@ def create_test_config():
     config["description"] = "PyTest configuration library"
 
     # Add url
-    config["hostname"] = 'self.auth["url"]'
+    config["hostname"] = {}
+    config["hostname"]["function"] = 'self.auth["url"]'
 
     # Add requirements
     config["debug"] = True

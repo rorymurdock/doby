@@ -15,10 +15,10 @@ def test_build_import():
     }
 
     assert imports.build_import(config) == (
-        ["reqrest", "apple", "pear==1.0.0", "lime"],
+        ["requests", "apple", "pear==1.0.0", "lime"],
         [
             "import logging",
-            "import reqrest",
+            "import requests",
             "import apple",
             "import orange",
             "import pear",
@@ -34,6 +34,6 @@ def test_build_import_empty():
     config = {}
 
     assert imports.build_import(config) == (
-        ["reqrest"],
-        ["import logging", "import reqrest", ""],
+        ["requests"],
+        ["import logging", "import requests", ""],
     )

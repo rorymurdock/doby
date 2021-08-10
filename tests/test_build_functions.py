@@ -215,8 +215,7 @@ def test_get_http_response_querystring_payload():
         "payload": {},
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get(f"/test/api", querystring=querystring, '
-        "payload=payload)",
+        '        response = requests.get(f"https://{self.hostname}/test/api", headers=self.api, params=querystring, data=payload)',
         "",
     ]
 
@@ -232,7 +231,7 @@ def test_get_http_response_querystring():
         "querystring": {},
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get(f"/test/api", querystring=querystring)',
+        '        response = requests.get(f"https://{self.hostname}/test/api", headers=self.api, params=querystring)',
         "",
     ]
 
@@ -247,7 +246,7 @@ def test_get_http_response():
         "path": "/test/api",
     }
     assert functions.get_http_response(function) == [
-        '        response = self.api.get(f"/test/api")',
+        '        response = requests.get(f"https://{self.hostname}/test/api", headers=self.api)',
         "",
     ]
 
@@ -395,8 +394,8 @@ def test_build_functions_basic():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        '',
-        '        response = self.api.get(f"/api/system/info")',
+        "",
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
         "",
         "        return response.text",
     ]
@@ -426,7 +425,7 @@ def test_build_functions_code_start():
         '        """',
         "",
         "        line 1",
-        '        response = self.api.get(f"/api/system/info")',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
         "",
         "        return response.text",
     ]
@@ -461,7 +460,7 @@ def test_build_functions_querystring():
         '        querystring["page"] = page',
         '        querystring["apikey"] = get_api_key()',
         "",
-        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api, params=querystring)',
         "",
         "        return response.text",
     ]
@@ -496,7 +495,7 @@ def test_build_functions_payload():
         '        payload["page"] = page',
         '        payload["apikey"] = get_api_key()',
         "",
-        '        response = self.api.get(f"/api/system/info", payload=payload)',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api, data=payload)',
         "",
         "        return response.text",
     ]
@@ -524,7 +523,7 @@ def test_build_functions_code_mid():
         '        """Let\'s peel"""',
         "",
         "        line 2",
-        '        response = self.api.get(f"/api/system/info")',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
         "",
         "        return response.text",
     ]
@@ -548,8 +547,8 @@ def test_check_http_response_exists():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        '',
-        '        response = self.api.get(f"/api/system/info")',
+        "",
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
         "",
         "        return response.text",
     ]
@@ -593,7 +592,7 @@ def test_build_querystring_function():
         "",
         "        querystring = self.filter_querystring(querystring)",
         "",
-        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api, params=querystring)',
         "",
         "    def filter_querystring(self, querystring):",
         '        """Removes None value keys from the querystring"""',
@@ -626,7 +625,7 @@ def test_build_querystring_function_missing_qs():
         "    def code_test(self):",
         '        """Let\'s peel"""',
         "",
-        '        response = self.api.get(f"/api/system/info")',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
         "",
     ]
 
@@ -654,7 +653,7 @@ def test_build_querystring_function_no_filter():
         "        querystring = {}",
         '        querystring["test"] = "testing"',
         "",
-        '        response = self.api.get(f"/api/system/info", querystring=querystring)',
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api, params=querystring)',
         "",
     ]
 
@@ -679,16 +678,16 @@ def test_build_functions_code_end():
     assert functions.build_functions(config) == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        '',
-        '        response = self.api.get(f"/api/system/info")',
         "",
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api)',
+        "",
+        "        line 3",
         "        if self.check_http_response(response):",
         "            return json.loads(response.text)",
         "        else:",
         "            logging.error('Error with HTTP request')",
         "            return False",
         "",
-        "        line 3",
         "    def check_http_response(self, response, expected_code=None):",
         '        """Checks if response is a expected or a known good response"""',
         "    ",
@@ -777,16 +776,15 @@ def test_build_functions_all():
         '        payload["apikey"] = get_api_key()',
         "",
         "        line 2",
-        '        response = self.api.get(f"/api/system/info", querystring=querystring, '
-        "payload=payload)",
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", headers=self.api, params=querystring, data=payload)',
         "",
+        "        line 3",
         "        if self.check_http_response(response):",
         "            return json.loads(response.text)",
         "        else:",
         "            logging.error('Error with HTTP request')",
         "            return False",
         "",
-        "        line 3",
         "        return response.text",
         "    def get_api_key(self):",
         '        """Custom test description"""',

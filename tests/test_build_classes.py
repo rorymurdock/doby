@@ -20,7 +20,9 @@ def test_get_classes():
         "",
         "",
         "",
-        "        # REST Functions",
+        "        # Requests variables",
+        '        self.hostname = self.auth["url"]',
+        "        self.debug = debug",
         "",
     ]
 
@@ -49,7 +51,9 @@ def test_get_classes_init_params():
         "        # Init code from config",
         "",
         "",
-        "        # REST Functions",
+        "        # Requests variables",
+        '        self.hostname = self.auth["url"]',
+        "        self.debug = debug",
         "",
     ]
 
@@ -68,9 +72,9 @@ def test_get_headers_one():
 
     assert classes.get_headers(config) == [
         "        # rest headers",
-        "        rest = {}",
-        '        rest["Accept"] = "application/json"',
-        '        rest["api-key"] = get_api_key()',
+        "        self.rest = {}",
+        '        self.rest["Accept"] = "application/json"',
+        '        self.rest["api-key"] = get_api_key()',
         "        ",
     ]
 
@@ -93,9 +97,9 @@ def test_get_headers_two():
 
     assert classes.get_headers(config) == [
         "        # rest headers",
-        "        rest = {}",
-        '        rest["Accept"] = "application/json"',
-        '        rest["api-key"] = get_api_key()',
+        "        self.rest = {}",
+        '        self.rest["Accept"] = "application/json"',
+        '        self.rest["api-key"] = get_api_key()',
         "        ",
     ]
 
@@ -115,8 +119,9 @@ def test_get_http_response_function_one():
     }
 
     assert classes.get_http_response_function(config) == [
-        "        # REST Functions",
-        "        self.rest = reqrest.REST(url=get_url(), debug=True, headers=rest)",
+        "        # Requests variables",
+        "        self.hostname = get_url()",
+        "        self.debug = debug",
     ]
 
 
@@ -139,9 +144,7 @@ def test_get_http_response_function_two():
     }
 
     assert classes.get_http_response_function(config) == [
-        "        # REST Functions",
-        '        self.rest = reqrest.REST(url="example.com", debug=True, '
-        "headers=rest)",
-        '        self.rest_xml = reqrest.REST(url="example.com", debug=True, '
-        "headers=rest_xml)",
+        "        # Requests variables",
+        '        self.hostname = "example.com"',
+        "        self.debug = debug",
     ]

@@ -78,7 +78,7 @@ def get_parameters(functions: dict, function_name):
     type_default_parameter_out = ""
 
     # Don't escape these:
-    types_used = ["None", "True", "False", None, True, False]
+    types_used = ["None", "True", "False", None, True, False, "{}"]
 
     # No args, return empty str
     if not key_exists("parameters", functions[function_name]):
@@ -226,6 +226,7 @@ def get_variable_keys_value_only(search_dict):
         else:
             logging.info("Found static in dict")
             return f'"{search_dict["static"]}"'
+    logging.warning("Unable to find function, variable, or static string")
     return ""
 
 

@@ -212,6 +212,9 @@ Adds a main function to the library if you want to launch it directly
 |||||start|A list of lines of code to insert at the of the start function before anything else|`list`|||||
 |||||mid|A list of lines of code to insert after the querystring and payload of the function but before the http request|`list`|||||
 |||||end|A list of lines of code to insert at the end of the function after the http request but before the return|`list`|||||
+|request|Modifiers for the http request created|`dict`|yes||||
+|||||files|specify a file for uploading in a POST/PUT request using a [Dynamically generated key](#dynamically-generated-keys)|`dict`|||||
+|||||timeout|Set a timeout|`int`|||||
 
 This configures the functions that are created in the library
 
