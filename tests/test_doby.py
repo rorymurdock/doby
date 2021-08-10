@@ -58,10 +58,10 @@ def test_get_imports():
 
     DOBY.reset_config(imports)
     assert DOBY.get_imports() == (
-        ["reqrest", "apple", "pear==1.0.0", "lime"],
+        ["requests", "apple", "pear==1.0.0", "lime"],
         [
             "import logging",
-            "import reqrest",
+            "import requests",
             "import apple",
             "import orange",
             "import pear",
@@ -114,8 +114,9 @@ def test_build_functions_basic():
     assert DOBY.get_functions() == [
         "    def code_test(self):",
         '        """Let\'s peel"""',
-        '',
-        '        response = self.api.get(f"/api/system/info")',
+        "",
+        '        response = requests.get(f"https://{self.hostname}/api/system/info", '
+        "headers=self.api)",
         "",
         "        return response.text",
     ]
