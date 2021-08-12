@@ -282,8 +282,6 @@ def get_http_response(function):
     if utils.key_exists("request", function):
         for key in ["files", "timeout"]:
             if utils.key_exists(key, function["request"]):
-                print(f"Type of {key}: %s" % type(function["request"][key]))
-                print(function["request"][key])
                 if isinstance(function["request"][key], dict):
                     http_parameters += f', {key}=%s' % utils.get_variable_keys_value_only(function["request"][key])
                 else:
@@ -291,8 +289,6 @@ def get_http_response(function):
 
     for key in ["querystring", "payload"]:
         if utils.key_exists(key, function):
-            print(f"Type of {key}: %s" % type(function[key]))
-            print("returns %s" % utils.get_variable_keys_value_only(function[key]))
 
             key_override = {}
             key_override["querystring"] = "params"

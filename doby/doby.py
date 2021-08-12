@@ -72,7 +72,6 @@ class Doby:
         out_files = {}
         logging.debug("Building Docstring")
         out_files[f"{output_lib_name}/{output_lib_name}.py"] = [self.get_docstring()]
-        out_files[f"{output_lib_name}/{output_lib_name}.py"] = [self.get_docstring()]
 
         logging.debug("Building imports & requirements")
         requirements_list, imports_list = self.get_imports()

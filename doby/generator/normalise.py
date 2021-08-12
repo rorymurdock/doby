@@ -63,5 +63,5 @@ def normalise_type(type_string):
     if type_string in type_map:
         logging.info("Normalised %s to %s", type_string, type_map[type_string])
         return type_map[type_string]
-    print("Error: type %s not in normalisation map" % type_string)
+    logging.warning("Error: type %s not in normalisation map", type_string)
     return "str"

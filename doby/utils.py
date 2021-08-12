@@ -40,7 +40,12 @@ def key_exists_get_value(search_key: str, search_dict: dict):
 def write_list_to_file(filename, path, data, no_new_line=False):
     """Writes str to file"""
 
-    logging.info("Writing to %s/%s: %s lines", path, filename, len(data))
+    line_length = len(data)
+    if line_length > 1:
+        logging.info("Writing to %s/%s: %s lines", path, filename, line_length)
+    else:
+        logging.info("Writing to %s/%s: %s line", path, filename, line_length)
+
     if not os.path.exists(path):
         logging.info("Creating %s directory", path)
         os.mkdir(path)
@@ -226,7 +231,7 @@ def get_variable_keys_value_only(search_dict):
         else:
             logging.info("Found static in dict")
             return f'"{search_dict["static"]}"'
-    logging.warning("Unable to find function, variable, or static string")
+    logging.warning("Unable to find function, variable, or static string in %s", search_dict)
     return ""
 
 

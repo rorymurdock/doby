@@ -42,7 +42,7 @@ def get_parameters(parameters):
         #     # continue
 
         if "description" not in parameter.keys():
-            print("Warning: No description for %s" % parameter["name"])
+            logging.warning("No description for %s", parameter["name"])
             param_out["description"] = ""
             continue
 
