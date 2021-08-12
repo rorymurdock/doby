@@ -293,29 +293,18 @@ def get_http_response(function):
         if utils.key_exists(key, function):
             print(f"Type of {key}: %s" % type(function[key]))
             print("returns %s" % utils.get_variable_keys_value_only(function[key]))
-            # if isinstance(function[key], dict):
-            #     http_parameters += f', {key}=%s' % utils.get_variable_keys_value_only(function[key])
-            # else:
-            # TODO come back and fix
-            if key == "querystring":
-                http_parameters += f', params={key}'
-            elif key == "payload":
-                http_parameters += f', data={key}'
-            else:
-                http_parameters += f', {key}={key}'
 
-            # print(function)
+            key_override = {}
+            key_override["querystring"] = "params"
+            key_override["payload"] = "data"
 
-    # if utils.key_exists("headerOverride") # TODO add header override
+            http_parameters += f', {key_override[key]}={key}'
+
+
     http_response_out.append(
         utils.indent(
             f'response = requests.{method}(f"https://{{self.hostname}}{path}", headers=self.{header}{http_parameters})',
             2))
-
-    # http_response_out.append(
-    #     utils.indent(
-    #         f'response = self.{http_function}.{method}(f"{path}"{querystring}{payload}{file})',
-    #         2))
 
     http_response_out.append("")
 

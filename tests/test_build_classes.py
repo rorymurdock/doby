@@ -9,7 +9,7 @@ DOBY = Doby(config_filename=config_filename, debug=True)
 
 
 def test_get_classes():
-    """"Test get_classes"""
+    """Test get_classes"""
 
     DOBY.reset_config(test_config.create_test_config())
     assert DOBY.get_classes() == [
