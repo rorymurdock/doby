@@ -63,6 +63,7 @@ def test_compile(args, lib_name):
     except subprocess.CalledProcessError:
         print("Unable to compile code, check the output file")
         sys.exit(3)
+    print("Done 🦈🪄")
 
 
 def main(args):
