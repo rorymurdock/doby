@@ -220,6 +220,23 @@ def test_get_http_response_querystring_payload():
     ]
 
 
+def test_get_http_response_querystring_timeout_files():
+    """Test get_http_response_querystring_payload"""
+
+    function = {
+        "name": "code_test",
+        "header": "api",
+        "method": "get",
+        "path": "/test/api",
+        "querystring": {},
+        "request": {"files": {"variable": "file_test_var"}, "timeout": 20},
+    }
+    assert functions.get_http_response(function) == [
+        '        response = requests.get(f"https://{self.hostname}/test/api", headers=self.api, files=file_test_var, timeout=20, params=querystring)',
+        "",
+    ]
+
+
 def test_get_http_response_querystring():
     """Test get_http_response_querystring"""
 
